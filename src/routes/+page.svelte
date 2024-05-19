@@ -1,6 +1,6 @@
 <script lang="ts">
-    import Clock from "$lib/Clock.svelte";
-    import TaskList from "$lib/TaskList.svelte";
+    import Clock from "$lib/components/Clock.svelte";
+    import TaskList from "$lib/components/TaskList.svelte";
 </script>
 
 <div class="flex flex-col h-screen font-sans md:flex-row">
