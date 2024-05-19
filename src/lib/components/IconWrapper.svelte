@@ -16,6 +16,6 @@
   
   <ClientOnly>
     {#if Icon}
-      <Icon {icon} {width} {height} />
+      <svelte:component this={Icon} {icon} {width} {height} />
     {/if}
   </ClientOnly>

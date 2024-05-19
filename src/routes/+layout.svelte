@@ -1,6 +1,6 @@
-<script>
+<script lang="ts">
     import "../lib/styles/app.css";
-    export let data;
+    export const data = {};
 </script>
   
 <slot />
