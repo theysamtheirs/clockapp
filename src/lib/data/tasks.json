@@ -1,0 +1,12 @@
+[
+    {"id": 1, "task": "Eat Breakfast", "time": "09:00 am", "completed": false, "isEditing": false},
+    {"id": 2, "task": "Drink Water", "time": "10:30 am", "completed": false, "isEditing": false},
+    {"id": 3, "task": "Go for a Jog", "time": "11:45 am", "completed": false, "isEditing": false},
+    {"id": 4, "task": "Shower", "time": "01:00 pm", "completed": false, "isEditing": false},
+    {"id": 5, "task": "Drink Tea", "time": "02:15 pm", "completed": false, "isEditing": false},
+    {"id": 6, "task": "Eat Lunch", "time": "03:30 pm", "completed": false, "isEditing": false},
+    {"id": 7, "task": "Drink Coffee", "time": "04:45 pm", "completed": false, "isEditing": false},
+    {"id": 8, "task": "Go for a Run", "time": "06:00 pm", "completed": false, "isEditing": false},
+    {"id": 9, "task": "Drink Beer", "time": "07:15 pm", "completed": false, "isEditing": false},
+    {"id": 10, "task": "Brush Teeth", "time": "08:30 pm", "completed": false, "isEditing": false}
+]
