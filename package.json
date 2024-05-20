@@ -3,7 +3,9 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "dev": "vite dev",
+    "dev:vite": "vite dev",
+    "dev:pocketbase": "./pocketbase serve",
+    "dev": "concurrently \"bun run dev:vite\" \"bun run dev:pocketbase\"",
     "build": "vite build",
     "preview": "vite preview",
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
@@ -20,6 +22,7 @@
     "@typescript-eslint/eslint-plugin": "^7.0.0",
     "@typescript-eslint/parser": "^7.0.0",
     "autoprefixer": "^10.4.19",
+    "concurrently": "^8.2.2",
     "daisyui": "^4.11.1",
     "eslint": "^8.56.0",
     "eslint-config-prettier": "^9.1.0",
@@ -38,6 +41,8 @@
   "dependencies": {
     "@iconify/svelte": "^4.0.2",
     "@supabase/supabase-js": "^2.43.2",
-    "@supabase/ui": "^0.36.5"
+    "@supabase/ui": "^0.36.5",
+    "pocketbase": "^0.21.2",
+    "run-parallel": "^1.2.0"
   }
 }
