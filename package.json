@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev:vite": "vite dev",
-    "dev:pocketbase": "./pocketbase serve",
+    "dev:pocketbase": "./backend/pocketbase serve",
     "dev": "concurrently \"bun run dev:vite\" \"bun run dev:pocketbase\"",
     "build": "vite build",
     "preview": "vite preview",
@@ -40,8 +40,6 @@
   "type": "module",
   "dependencies": {
     "@iconify/svelte": "^4.0.2",
-    "@supabase/supabase-js": "^2.43.2",
-    "@supabase/ui": "^0.36.5",
     "pocketbase": "^0.21.2",
     "run-parallel": "^1.2.0"
   }
