@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev:vite": "vite dev",
-    "dev:pocketbase": "./backend/pocketbase serve",
+    "dev:pocketbase": "./pb/pocketbase serve",
     "dev": "concurrently \"bun run dev:vite\" \"bun run dev:pocketbase\"",
     "build": "vite build",
     "preview": "vite preview",

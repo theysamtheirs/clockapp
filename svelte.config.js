@@ -11,6 +11,11 @@ const config = {
 		// Use the Vercel adapter for SSR
 		adapter: adapter(),
 		// Optional: Add any other SvelteKit configuration here
+        files: {
+            hooks: {
+              server: 'src/hooks.server'
+            }
+          }
 	}
 };
 
