@@ -1,11 +1,12 @@
 import PocketBase from 'pocketbase';
+import { VITE_POCKETBASE_URL } from '$env/static/private';
 
 /** @type {import('@sveltejs/kit').Handle} */
 export async function handle({ event, resolve }) {
   // Initialize PocketBase client with the remote URL
 //   const pb = new PocketBase(import.meta.env.VITE_POCKETBASE_URL);
 
-  const pb = new PocketBase('https://timekit.fly.dev');
+  const pb = new PocketBase(VITE_POCKETBASE_URL);
 
   // Load the store data from the request cookie string
   pb.authStore.loadFromCookie(event.request.headers.get('cookie') || '');
