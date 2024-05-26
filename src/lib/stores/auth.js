@@ -33,10 +33,13 @@
 // }
 
 // src/lib/stores/auth.js
+
 import { writable } from 'svelte/store';
 import PocketBase from 'pocketbase';
+// import { VITE_POCKETBASE_URL } from '$env/static/private';
+const pbUrl = import.meta.env.VITE_POCKETBASE_URL;
 
-const pb = new PocketBase(import.meta.env.VITE_POCKETBASE_URL);
+const pb = new PocketBase(pbUrl);
 export const user = writable(pb.authStore.model);
 
 pb.authStore.onChange((auth) => {
