@@ -1,43 +1,5 @@
 // src/lib/stores/auth.js
 
-// import { writable } from 'svelte/store';
-// import PocketBase from 'pocketbase';
-// const pbUrl = import.meta.env.VITE_POCKETBASE_URL;
-
-// const pb = new PocketBase(pbUrl);
-// export const user = writable(pb.authStore.model);
-
-// pb.authStore.onChange((auth) => {
-//   user.set(auth.model);
-// });
-
-// export async function login(email, password) {
-//   await pb.collection('users').authWithPassword(email, password);
-// }
-
-// export async function register(email, password, passwordConfirm) {
-//   try {
-//     await pb.collection('users').create({ email, password, passwordConfirm });
-//     // Log in the user after successful registration
-//     await login(email, password);
-//   } catch (error) {
-//     console.error('Registration error:', error);
-//     if (error.response) {
-//       console.error('Error response:', error.response);
-//     }
-//     throw error;
-//   }
-// }
-
-
-
-// export async function logout() {
-//   pb.authStore.clear();
-//   user.set(null); // Ensure the user store is cleared
-// }
-
-// src/lib/stores/auth.js
-
 import { writable } from 'svelte/store';
 import PocketBase from 'pocketbase';
 const pbUrl = import.meta.env.VITE_POCKETBASE_URL;
@@ -52,6 +14,7 @@ pb.authStore.onChange((auth) => {
 export async function login(email, password) {
   await pb.collection('users').authWithPassword(email, password);
 }
+
 
 // Adjusted function to add default tasks for a new user
 async function addDefaultTasks(userId) {
@@ -87,6 +50,7 @@ export async function register(email, password, passwordConfirm) {
 }
 
 export async function logout() {
-  pb.authStore.clear();
-  user.set(null); // Ensure the user store is cleared
-}
+    pb.authStore.clear();
+    user.set(null); // Ensure the user store is cleared
+  }
+  

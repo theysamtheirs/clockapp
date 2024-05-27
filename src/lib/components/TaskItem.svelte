@@ -10,7 +10,7 @@
       <slot name="editor"></slot>
     {:else}
       <div class="flex items-center space-x-6">
-        <span class="inline-block text-sm text-gray-800 min-w-16 {task.completed ? 'opacity-30 line-through' : ''}">{task.time}</span>
+        <span class="inline-block text-sm text-gray-800 min-w-16 {task.completed ? 'opacity-30 line-through' : ''}">{task.taskTime}</span>
         <p class="text-center inline-block text-gray-700 font-medium text-2xl {task.completed ? 'opacity-60 line-through' : ''}">{task.task}</p>
       </div>
       <div class="flex items-center justify-center">

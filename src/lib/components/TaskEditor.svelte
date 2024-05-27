@@ -11,20 +11,20 @@
   
     function handleKeydown(event) {
       if (event.key === 'Escape') {
-        task.time = originalTime; // Restore original time before canceling
+        task.taskTime = originalTime; // Restore original time before canceling
         cancelEdit(task.id, originalTime);
       } else if (event.key === 'Enter') {
-        if (!isValidTime(task.time)) {
-          task.time = originalTime; // Restore original time
+        if (!isValidTime(task.taskTime)) {
+          task.taskTime = originalTime; // Restore original time
           validationError.set('Invalid time format. Please use HH:MM am/pm. Try again.');
         } else {
-          updateTask(task.id, task.task, task.time);
+          updateTask(task.id, task.task, task.taskTime);
         }
       }
     }
   
     onMount(() => {
-      originalTime = task.time; // Store the original time when the component mounts
+      originalTime = task.taskTime; // Store the original time when the component mounts
       document.addEventListener('keydown', handleKeydown);
     });
   
@@ -40,20 +40,20 @@
   </script>
 
 <div class="flex justify-center pt-2 space-x-2">
-    <input type="text" bind:value={task.time} class="text-gray-600 rounded-sm max-w-28 input" />
+    <input type="text" bind:value={task.taskTime} class="text-gray-600 rounded-sm max-w-28 input" />
     <input type="text" bind:value={task.task} class="w-full text-gray-600 rounded-sm input" />
     <button on:click={() => {
-      task.time = originalTime; // Restore original time before canceling
+      task.taskTime = originalTime; // Restore original time before canceling
       cancelEdit(task.id, originalTime);
     }} class="mb-2 btn btn-square btn-secondary btn-outline">
       <IconWrapper icon="mdi:cancel" width="28" height="28" />
     </button>
     <button on:click={() => {
-      if (!isValidTime(task.time)) {
-        task.time = originalTime; // Restore original time
+      if (!isValidTime(task.taskTime)) {
+        task.taskTime = originalTime; // Restore original time
         validationError.set('Invalid time format. Please use HH:MM am/pm. Try again.');
       } else {
-        updateTask(task.id, task.task, task.time);
+        updateTask(task.id, task.task, task.taskTime);
       }
     }} class="mb-2 btn btn-square btn-primary btn-outline">
       <IconWrapper icon="fluent:save-16-regular" width="28" height="28" />
