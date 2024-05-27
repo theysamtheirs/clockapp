@@ -1,17 +1,12 @@
 <script lang="ts">
     import { onMount } from 'svelte';
-    import { tasks, fetchTasks } from '$lib/stores/todoStore';
+    import { tasks, fetchTasks, updateTask, toggleCompletion, cancelEdit, validationError } from '../stores/todoStore';
     import TaskItem from './TaskItem.svelte';
     import TaskEditor from './TaskEditor.svelte';
     import ValidationError from './ValidationError.svelte';
-    import { writable } from 'svelte/store';
-    import { toggleCompletion, updateTask, cancelEdit } from '$lib/stores/todoStore';
-
-    const validationError = writable('');
 
     onMount(() => {
-        const unsubscribe = fetchTasks();
-        return () => unsubscribe();
+        fetchTasks();
     });
 
     function toggleEditMode(taskId: string) {
