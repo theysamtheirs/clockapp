@@ -1,5 +1,8 @@
 // src/lib/stores/todoStore.ts
-import { writable } from 'svelte/store';
+import { writable, get } from 'svelte/store';
+import PocketBase from 'pocketbase';
+const pbUrl = import.meta.env.VITE_POCKETBASE_URL;
+const pb = new PocketBase(pbUrl);
 import { fetchTasksFromAPI, updateTaskCompletion, updateTaskDetails } from '../api/tasks';
 import { sortTasks, isValidTime } from '../utils/timeUtils';
 
@@ -18,10 +21,17 @@ export async function toggleCompletion(taskId: string) {
         )
     );
 
-    const task = $tasks.find(task => task.id === taskId);
+    const currentTasks = get(tasks);
+    const task = currentTasks.find(task => task.id === taskId);
     if (task) {
         try {
-            await updateTaskCompletion(taskId, task.completed);
+            const data = {
+                task: task.task,
+                userID: task.userID, // Ensure you have the userID in your task object
+                completed: task.completed,
+                taskTime: task.taskTime
+            };
+            await pb.collection('tasks').update(taskId, data);
         } catch (error) {
             // Revert the local state if the API call fails
             tasks.update(currentTasks => 
