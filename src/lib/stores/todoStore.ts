@@ -83,15 +83,37 @@ export function cancelEdit(taskId: string, originalTime: string) {
     console.log('Edit cancelled for task:', taskId);
 }
 
-export function toggleCompletion(taskId: string) {
+export async function toggleCompletion(taskId: string) {
     console.log('toggleCompletion called with:', taskId); // Entry log
 
-    tasks.update(currentTasks => 
-        sortTasks(currentTasks.map(task =>
-            task.id === taskId ? { ...task, completed: !task.completed } : task
-        ))
-    );
+    const currentTasks = get(tasks);
+    const task = currentTasks.find(task => task.id === taskId);
+    if (!task) {
+        console.error('Task not found:', taskId);
+        return;
+    }
 
-    const updatedTasks = get(tasks);
-    console.log('Tasks after toggle completion:', updatedTasks); // Log after state update
+    // Toggle the completion status
+    const updatedCompletionStatus = !task.completed;
+
+    // Update the task in the PocketBase database
+    try {
+        await pb.collection('tasks').update(taskId, {
+            completed: updatedCompletionStatus
+        });
+        console.log('Task completion status updated in database:', { taskId, completed: updatedCompletionStatus });
+
+        // Update the task in the Svelte store
+        tasks.update(currentTasks => 
+            currentTasks.map(task =>
+                task.id === taskId ? { ...task, completed: updatedCompletionStatus } : task
+            )
+        );
+
+        const updatedTasks = get(tasks);
+        console.log('Tasks after toggle completion:', updatedTasks); // Log after state update
+    } catch (error) {
+        console.error('Error updating task completion status in database:', error);
+        alert('Error updating task completion status. Please try again.');
+    }
 }
