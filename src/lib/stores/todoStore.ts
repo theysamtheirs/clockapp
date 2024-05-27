@@ -25,14 +25,10 @@ export async function toggleCompletion(taskId: string) {
     const task = currentTasks.find(task => task.id === taskId);
     if (task) {
         try {
-            const data = {
-                task: task.task,
-                userID: task.userID, // Ensure you have the userID in your task object
-                completed: task.completed,
-                taskTime: task.taskTime
-            };
-            await pb.collection('tasks').update(taskId, data);
+            await pb.collection('tasks').update(taskId, { completed: task.completed });
+            console.log('Task completion updated successfully:', task); // Debugging log
         } catch (error) {
+            console.error('Error updating task completion:', error);
             // Revert the local state if the API call fails
             tasks.update(currentTasks => 
                 currentTasks.map(task =>
@@ -44,22 +40,46 @@ export async function toggleCompletion(taskId: string) {
 }
 
 export async function updateTask(taskId: string, newTask: string, newTime: string) {
-    if (!isValidTime(newTime)) {
+    console.log('updateTask called with:', { taskId, newTask, newTime }); // Entry log
+
+    const currentTasks = get(tasks);
+    const task = currentTasks.find(task => task.id === taskId);
+
+    if (!task) {
+        console.error('Task not found:', taskId);
+        return;
+    }
+
+    // Only validate the time if it has been changed
+    if (task.taskTime !== newTime && !isValidTime(newTime)) {
+        console.log('Invalid time format:', newTime); // Log validation check
         validationError.set('Invalid time format. Please use HH:MM am/pm. Try again.');
         setTimeout(() => validationError.set(''), 3000); // Clear the validation message after 3 seconds
         return;
     }
+
     validationError.set('');
+    console.log('Current tasks before update:', currentTasks); // Log before state update
+
     tasks.update(currentTasks => 
         sortTasks(currentTasks.map(task =>
-            task.id === taskId ? { ...task, task: newTask, time: newTime, isEditing: false } : task
+            task.id === taskId ? { ...task, task: newTask, taskTime: newTime, isEditing: false } : task
         ))
     );
 
+    const updatedTasks = get(tasks);
+    console.log('Tasks after update:', updatedTasks); // Log after state update
+
     try {
-        await updateTaskDetails(taskId, newTask, newTime);
+        const data = {
+            task: newTask,
+            taskTime: newTime
+        };
+        console.log('Making API call with data:', data); // Log before API call
+        const response = await updateTaskDetails(taskId, newTask, newTime); // Ensure correct function call
+        console.log('Task updated successfully:', response); // Log API response
     } catch (error) {
-        // Handle error if needed
+        console.error('Error updating task details:', error); // Log API error
     }
 }
 
@@ -67,7 +87,7 @@ export function cancelEdit(taskId: string, originalTime: string) {
     validationError.set(''); // Clear the validation message
     tasks.update(currentTasks => 
         currentTasks.map(task =>
-            task.id === taskId ? { ...task, time: originalTime, isEditing: false } : task
+            task.id === taskId ? { ...task, taskTime: originalTime, isEditing: false } : task
         )
     );
 }

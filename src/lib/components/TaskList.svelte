@@ -13,6 +13,7 @@
         const unsubscribe = fetchTasks();
         return () => unsubscribe();
     });
+
     function toggleEditMode(taskId: string) {
         tasks.update(currentTasks => 
             currentTasks.map(task =>

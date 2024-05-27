@@ -25,7 +25,12 @@ export async function updateTaskCompletion(taskId: string, completed: boolean) {
 
 export async function updateTaskDetails(taskId: string, newTask: string, newTime: string) {
     try {
-        const record = await pb.collection('tasks').update(taskId, { task: newTask, time: newTime });
+        const data = {
+            task: newTask,
+            taskTime: newTime
+        };
+        const record = await pb.collection('tasks').update(taskId, data);
+        console.log('PocketBase update response:', record); // Debugging log
         return record;
     } catch (error) {
         console.error('Error updating task details:', error);
